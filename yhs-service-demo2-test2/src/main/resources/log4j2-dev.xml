@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration status="info">
+    <Properties>
+        <Property name="LOG_HOME">${sys:BASE_LOG_HOME:-/tmp/tomcat}/logs/yhd_service</Property>
+        <Property name="PID">????</Property>
+        <Property name="LOG_EXCEPTION_CONVERSION_WORD">%xwEx</Property>
+        <Property name="LOG_LEVEL_PATTERN">%5p
+            [srv_demo2_test2,%X{traceId:-},%X{spanId:-}]
+        </Property>
+        <Property name="LOG_DATEFORMAT_PATTERN">yyyy-MM-dd HH:mm:ss.SSS</Property>
+        <Property name="CONSOLE_LOG_PATTERN">%clr{%d{${LOG_DATEFORMAT_PATTERN}}}{faint} %clr{${LOG_LEVEL_PATTERN}}
+            %clr{${sys:PID}}{magenta} %clr{---}{faint} %clr{[%15.15t]}{faint} %clr{%-40.40C{1.}}{cyan} %clr{:}{faint}
+            %M:%L: %m%n${sys:LOG_EXCEPTION_CONVERSION_WORD}
+        </Property>
+        <Property name="FILE_LOG_PATTERN">%clr{%d{${LOG_DATEFORMAT_PATTERN}}}{faint} %clr{${LOG_LEVEL_PATTERN}}
+            %clr{${sys:PID}}{magenta} %clr{---}{faint} %clr{[%15.15t]}{faint} %clr{%-40.40C{1.}}{cyan} %clr{:}{faint}
+            %M:%L: %m%n${sys:LOG_EXCEPTION_CONVERSION_WORD}
+        </Property>
+    </Properties>
+
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT" follow="true">
+            <PatternLayout pattern="${sys:CONSOLE_LOG_PATTERN}"/>
+        </Console>
+
+        <RollingRandomAccessFile name="normal_appender"
+                                 immediateFlush="true" fileName="${LOG_HOME}/normal.log"
+                                 filePattern="${LOG_HOME}/normal.log.%d{yyyy-MM-dd}.gz">
+            <PatternLayout pattern="[${sys:FILE_LOG_PATTERN}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+            <DefaultRolloverStrategy>
+                <Delete basePath="${LOG_HOME}" maxDepth="1">
+                    <IfFileName glob="normal.log.*.gz"/>
+                    <IfLastModified age="7d"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingRandomAccessFile>
+
+        <RollingRandomAccessFile name="file_appender"
+                                 immediateFlush="true" fileName="${LOG_HOME}/yhd_service.out"
+                                 filePattern="${LOG_HOME}/yhd_service.out.%d{yyyy-MM-dd}.gz">
+            <PatternLayout pattern="[${sys:FILE_LOG_PATTERN}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+            <DefaultRolloverStrategy>
+                <Delete basePath="${LOG_HOME}" maxDepth="1">
+                    <IfFileName glob="yhd_service.out.*.gz"/>
+                    <IfLastModified age="7d"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingRandomAccessFile>
+
+        <RollingRandomAccessFile name="redis_appender"
+                                 immediateFlush="true" fileName="${LOG_HOME}/redis.log"
+                                 filePattern="${LOG_HOME}/redis.log.%d{yyyy-MM-dd}.gz">
+            <PatternLayout pattern="[${sys:FILE_LOG_PATTERN}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+            <DefaultRolloverStrategy>
+                <Delete basePath="${LOG_HOME}" maxDepth="1">
+                    <IfFileName glob="redis.log.*.gz"/>
+                    <IfLastModified age="7d"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingRandomAccessFile>
+
+        <RollingRandomAccessFile name="mq_appender"
+                                 immediateFlush="true" fileName="${LOG_HOME}/mq.log"
+                                 filePattern="${LOG_HOME}/mq.log.%d{yyyy-MM-dd}.gz">
+            <PatternLayout pattern="[${sys:FILE_LOG_PATTERN}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+            <DefaultRolloverStrategy>
+                <Delete basePath="${LOG_HOME}" maxDepth="1">
+                    <IfFileName glob="mq.log.*.gz"/>
+                    <IfLastModified age="7d"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingRandomAccessFile>
+        <RollingRandomAccessFile name="yhd_appender"
+                                 immediateFlush="true" fileName="${LOG_HOME}/yhd.log"
+                                 filePattern="${LOG_HOME}/yhd.log.%d{yyyy-MM-dd}.gz">
+            <PatternLayout pattern="${sys:FILE_LOG_PATTERN}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+            <DefaultRolloverStrategy>
+                <Delete basePath="${LOG_HOME}" maxDepth="1">
+                    <IfFileName glob="yhd.log.*.gz"/>
+                    <IfLastModified age="7d"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingRandomAccessFile>
+    </Appenders>
+
+    <Loggers>
+        <logger name="normal" level="debug" additivity="false" includeLocation="true">
+            <appender-ref ref="Console"/>
+            <appender-ref ref="normal_appender"/>
+        </logger>
+        <logger name="com.yhd" level="debug" additivity="false" includeLocation="true">
+            <appender-ref ref="Console"/>
+            <appender-ref ref="yhd_appender"/>
+        </logger>
+        <AsyncLogger name="redis" level="info" additivity="false" includeLocation="true">
+            <appender-ref ref="Console"/>
+            <appender-ref ref="redis_appender"/>
+        </AsyncLogger>
+        <AsyncLogger name="mq" level="info" additivity="false" includeLocation="true">
+            <appender-ref ref="Console"/>
+            <appender-ref ref="mq_appender"/>
+        </AsyncLogger>
+        <AsyncRoot level="info" includeLocation="true">
+            <appender-ref ref="Console"/>
+            <appender-ref ref="file_appender"/>
+        </AsyncRoot>
+    </Loggers>
+
+</configuration>

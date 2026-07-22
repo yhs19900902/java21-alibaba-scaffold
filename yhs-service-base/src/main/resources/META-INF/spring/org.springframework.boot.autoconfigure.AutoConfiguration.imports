@@ -1,0 +1,3 @@
+com.yhs.base.config.YhsJacksonConfiguration
+com.yhs.base.config.RestTemplateConfig
+com.yhs.base.config.VirtualThreadConfiguration

@@ -1,0 +1,78 @@
+server:
+  port: 9901
+
+spring:
+  profiles:
+    active: @@base.properties.active@@
+  application:
+    name: @@artifactId@@
+  cloud:
+    nacos:
+      discovery:
+        server-addr: @@base.spring.cloud.nacos.serveraddr@@
+        namespace: @@base.spring.cloud.nacos.namespace@@
+        username: @@base.spring.cloud.nacos.username@@
+        password: @@base.spring.cloud.nacos.password@@
+        group: @@base.spring.cloud.nacos.group@@
+        metadata: { 'version': '${spring.profiles.active}' }
+      config:
+        namespace: ${spring.cloud.nacos.discovery.namespace}
+        username: ${spring.cloud.nacos.discovery.username}
+        password: ${spring.cloud.nacos.discovery.password}
+        server-addr: ${spring.cloud.nacos.discovery.server-addr}
+        group: ${spring.cloud.nacos.discovery.group}
+        file-extension: yml
+        shared-configs:
+          - dataId: yhs-application.${spring.cloud.nacos.config.file-extension}
+            group: ${spring.cloud.nacos.discovery.group}
+          - dataId: yhs-application-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
+            group: ${spring.cloud.nacos.discovery.group}
+    sentinel:
+      transport:
+        dashboard: @@base.spring.cloud.sentinel.transport.dashboard@@
+        port: @@base.spring.cloud.sentinel.transport.port@@
+  kafka:
+    bootstrap-servers: @@base.spring.kafka.bootstrapServers@@
+  main:
+    allow-circular-references: true
+
+  sleuth:
+    sampler:
+      probability: 1.0
+    enabled: true
+    traceId128: true
+    supports-join: false
+  zipkin:
+    service:
+      name: ${spring.application.name}
+    sender:
+      type: kafka
+    kafka:
+      topic: zipkin
+feign:
+  sentinel:
+    enabled: true
+project:
+  artifactId: @@project.artifactId@@
+  version: @@project.version@@
+  description: @@project.description@@
+yhs:
+  doc:
+    aggregation:
+      group-name: 'FA电商购物车服务 yhd-service-fa-cart'
+logging:
+  pattern:
+    level: "%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]"
+# config: classpath:log4j2-@@base.logging.config.env@@.xml
+management:
+  zipkin:
+    tracing:
+      connect-timeout: 3s
+      endpoint: http://10.14.0.117:9411/api/v2/spans
+  tracing:
+    sampling:
+      probability: 1.0
+# 开启使用虚拟线程 默认是开启
+app:
+  virtual-threads:
+    enabled: true

@@ -1,0 +1,40 @@
+server:
+  port: 80
+
+spring:
+  profiles:
+    active: @@base.properties.active@@
+  application:
+    name: @@artifactId@@
+  cloud:
+    nacos:
+      discovery:
+        server-addr: @@base.spring.cloud.nacos.serveraddr@@
+        namespace: @@base.spring.cloud.nacos.namespace@@
+        username: @@base.spring.cloud.nacos.username@@
+        password: @@base.spring.cloud.nacos.password@@
+        group: @@base.spring.cloud.nacos.group@@
+        metadata: { 'version': '${spring.profiles.active}' }
+      config:
+        namespace: ${spring.cloud.nacos.discovery.namespace}
+        username: ${spring.cloud.nacos.discovery.username}
+        password: ${spring.cloud.nacos.discovery.password}
+        server-addr: ${spring.cloud.nacos.discovery.server-addr}
+        group: ${spring.cloud.nacos.discovery.group}
+        file-extension: yml
+        shared-configs:
+          - dataId: application.${spring.cloud.nacos.config.file-extension}
+            group: ${spring.cloud.nacos.discovery.group}
+          - dataId: application-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
+            group: ${spring.cloud.nacos.discovery.group}
+
+knife4j:
+  enableAggregation: true
+  cloud:
+    enable: true
+yhs:
+  job:
+    admin-addresses: http://10.14.0.63:8089/job
+    access-token: yhs_service
+    app-name: ${spring.application.name}
+

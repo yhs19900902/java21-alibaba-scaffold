@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration status="info">
+    <Properties>
+        <Property name="LOG_HOME">${sys:BASE_LOG_HOME:-/tmp/tomcat}/logs/yhs_service</Property>
+        <Property name="LOG_LEVEL_PATTERN">%-5level</Property>
+        <Property name="LOG_DATEFORMAT_PATTERN">yyyy-MM-dd HH:mm:ss.SSS</Property>
+        <Property name="CONSOLE_LOG_PATTERN">%clr{%d{${LOG_DATEFORMAT_PATTERN}}} [%sw_ctx] %clr{${LOG_LEVEL_PATTERN}}
+            [%t] %c - %msg%xEx%n
+        </Property>
+        <Property name="FILE_LOG_PATTERN">%clr{%d{${LOG_DATEFORMAT_PATTERN}}} [%sw_ctx] %clr{${LOG_LEVEL_PATTERN}} [%t]
+            %c - %msg%xEx%n
+        </Property>
+    </Properties>
+
+
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="${CONSOLE_LOG_PATTERN}"/>
+        </Console>
+        <Async name="Async" includeLocation="true">
+            <AppenderRef ref="Console"/>
+        </Async>
+        <RollingFile name="RollingFile" fileName="${LOG_HOME}/yhs_service.log"
+                     filePattern="${LOG_HOME}/yhs_service-%d{yyyy-MM-dd}-%i.log">
+            <PatternLayout pattern="${FILE_LOG_PATTERN}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <SizeBasedTriggeringPolicy size="100 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="7"/>
+        </RollingFile>
+    </Appenders>
+    <Loggers>
+        <Root level="info">
+            <AppenderRef ref="Async"/>
+            <AppenderRef ref="RollingFile"/>
+        </Root>
+    </Loggers>
+</configuration>

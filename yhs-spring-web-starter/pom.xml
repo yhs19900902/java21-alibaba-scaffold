@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>com.yhs.springcloud</groupId>
+        <artifactId>yhs-spring-cloud-parent</artifactId>
+        <version>1.0.0</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.yhs</groupId>
+    <artifactId>yhs-spring-web-starter</artifactId>
+    <version>1.0.0</version>
+    <dependencies>
+        <!-- nacos config  -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+        </dependency>
+        <!-- nacos discovery  -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+        </dependency>
+        <!--web 模块-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <!--undertow容器-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-undertow</artifactId>
+        </dependency>
+
+        <!--xxs攻击过滤-->
+        <dependency>
+            <groupId>com.yhs</groupId>
+            <artifactId>yhs-xss-starter</artifactId>
+        </dependency>
+        <!--feign-->
+        <dependency>
+            <groupId>com.yhs</groupId>
+            <artifactId>yhs-feign-starter</artifactId>
+        </dependency>
+        <!--gray-->
+        <dependency>
+            <groupId>com.yhs</groupId>
+            <artifactId>yhs-gray-starter</artifactId>
+        </dependency>
+        <!--log-->
+        <dependency>
+            <groupId>com.yhs</groupId>
+            <artifactId>yhs-log-starter</artifactId>
+        </dependency>
+        <!--sentinel-->
+        <dependency>
+            <groupId>com.yhs</groupId>
+            <artifactId>yhs-sentinel-starter</artifactId>
+        </dependency>
+        <!--validator 参数校验-->
+        <dependency>
+            <groupId>com.yhs</groupId>
+            <artifactId>yhs-validator-starter</artifactId>
+        </dependency>
+        <!--doc-->
+        <dependency>
+            <groupId>com.yhs</groupId>
+            <artifactId>yhs-springdoc-starter</artifactId>
+        </dependency>
+    </dependencies>
+</project>

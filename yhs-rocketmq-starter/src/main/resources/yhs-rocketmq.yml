@@ -1,0 +1,3 @@
+rocketmq:
+  client:
+    logRoot: /data/tomcat/logs

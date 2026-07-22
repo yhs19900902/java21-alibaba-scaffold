@@ -1,0 +1,5 @@
+springdoc:
+  paths-to-match: /**
+  paths-to-exclude:
+    - /error
+    - /actuator/**

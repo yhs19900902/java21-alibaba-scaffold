@@ -1,0 +1,3 @@
+com.yhs.redis.config.RedisTemplateConfiguration
+com.yhs.redis.config.CustomCacheManagerCustomizers
+com.yhs.redis.config.CustomRedisConfiguration

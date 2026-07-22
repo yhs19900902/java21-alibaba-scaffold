@@ -1,0 +1,2 @@
+com.yhs.RocketMqConfiguration
+org.apache.rocketmq.spring.autoconfigure.RocketMQAutoConfiguration
