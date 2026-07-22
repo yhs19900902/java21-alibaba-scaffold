@@ -1,0 +1,52 @@
+spring:
+  mail:
+    host: stmp.qq.com
+    port: 25
+    username: xxx@qq.com
+    from: xxx@qq.com
+    password: xxx
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+          socketFactory:
+            class: javax.net.ssl.SSLSocketFactory
+  datasource:
+    name: yhd-test
+    #where条件中只能存放多少数据
+    where-in-num: 2000
+    url: jdbc:mysql://10.14.2.9:3306/yhs_job?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&serverTimezone=Asia/Shanghai
+    username: agile_user
+    password: DGagile.!@#123
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      minimum-idle: 10
+      max-lifetime: 900000
+      maximum-pool-size: 30
+      auto-commit: true
+      pool-name: HikariCP
+      connection-test-query: SELECT 1
+      connection-timeout: 10000
+      validation-timeout: 1000
+      idle-timeout: 30000
+xxl:
+  job:
+    i18n: zh_CN
+    accessToken: sadwa15484815156456
+    triggerpool:
+      fast:
+        max: 200
+      slow:
+        max: 100
+    logretentiondays: 7
+
+management:
+  server:
+    base-path: /actuator
+  health:
+    mail:
+      enabled: false

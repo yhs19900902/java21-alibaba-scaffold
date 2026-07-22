@@ -1,0 +1,43 @@
+server:
+  port: 8089
+  servlet:
+    context-path: /job
+spring:
+  profiles:
+    active: stg
+  application:
+    name: yhs-xxljob-admin
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 10.14.0.119:9001,10.14.0.120:9001,10.14.0.121:9001
+        namespace: yhd-service-stg
+        username: appuser
+        password: 08ba970691840795
+        group: YHD-SERVICE
+      config:
+        namespace: ${spring.cloud.nacos.discovery.namespace}
+        username: ${spring.cloud.nacos.discovery.username}
+        password: ${spring.cloud.nacos.discovery.password}
+        server-addr: ${spring.cloud.nacos.discovery.server-addr}
+        file-extension: yml
+        group: YHD-SERVICE
+        shared-configs:
+          - yhs-application.${spring.cloud.nacos.config.file-extension}
+          - yhs-application-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
+
+  mvc:
+    servlet:
+      load-on-startup: 0
+    static-path-pattern: /static/**
+  web:
+    resources:
+      static-locations: classpath:/static/
+  freemarker:
+    template-loader-path: classpath:/templates/
+    suffix: .ftl
+    charset: UTF-8
+    request-context-attribute: request
+    settings.number_format: 0.##########
+mybatis:
+  mapper-locations: classpath:/mybatis-mapper/*Mapper.xml
